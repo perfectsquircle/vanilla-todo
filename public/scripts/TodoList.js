@@ -1,8 +1,8 @@
 /* global VT */
 window.VT = window.VT || {};
 
-VT.TodoList = function (el) {
-  var state = {
+VT.TodoList = el => {
+  const state = {
     items: [],
   };
 
@@ -14,7 +14,7 @@ VT.TodoList = function (el) {
   VT.AppSortable(el.querySelector('.items'), {});
   VT.TodoItemInput(el.querySelector('.todo-item-input'));
 
-  el.addEventListener('sortableDrop', function (e) {
+  el.addEventListener('sortableDrop', e => {
     el.dispatchEvent(
       new CustomEvent('moveItem', {
         detail: {
@@ -29,16 +29,16 @@ VT.TodoList = function (el) {
   function update(next) {
     Object.assign(state, next);
 
-    var container = el.querySelector('.items');
-    var obsolete = new Set(container.children);
-    var childrenByKey = new Map();
+    const container = el.querySelector('.items');
+    const obsolete = new Set(container.children);
+    const childrenByKey = new Map();
 
-    obsolete.forEach(function (child) {
+    obsolete.forEach(child => {
       childrenByKey.set(child.getAttribute('data-key'), child);
     });
 
-    var children = state.items.map(function (item) {
-      var child = childrenByKey.get(item.id);
+    const children = state.items.map(item => {
+      let child = childrenByKey.get(item.id);
 
       if (child) {
         obsolete.delete(child);
@@ -49,16 +49,16 @@ VT.TodoList = function (el) {
         VT.TodoItem(child);
       }
 
-      child.todoItem.update({ item: item });
+      child.todoItem.update({ item });
 
       return child;
     });
 
-    obsolete.forEach(function (child) {
+    obsolete.forEach(child => {
       container.removeChild(child);
     });
 
-    children.forEach(function (child, index) {
+    children.forEach((child, index) => {
       if (child !== container.children[index]) {
         container.insertBefore(child, container.children[index]);
       }
@@ -66,6 +66,6 @@ VT.TodoList = function (el) {
   }
 
   el.todoList = {
-    update: update,
+    update,
   };
 };

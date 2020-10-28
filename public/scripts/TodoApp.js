@@ -1,8 +1,8 @@
 /* global VT */
 window.VT = window.VT || {};
 
-VT.TodoApp = function (el) {
-  var state = {
+VT.TodoApp = el => {
+  const state = {
     items: [],
     customLists: [],
     at: VT.formatDateId(new Date()),
@@ -53,30 +53,30 @@ VT.TodoApp = function (el) {
   el.addEventListener('draggableDrop', beforeFlip, true);
 
   // some necessary work to orchestrate drag & drop with FLIP animations
-  el.addEventListener('draggableStart', function (e) {
+  el.addEventListener('draggableStart', e => {
     e.detail.image.classList.add('_noflip');
     el.appendChild(e.detail.image);
   });
 
-  el.addEventListener('draggableCancel', function (e) {
+  el.addEventListener('draggableCancel', e => {
     e.detail.image.classList.remove('_noflip');
     update();
   });
 
-  el.addEventListener('draggableDrop', function (e) {
+  el.addEventListener('draggableDrop', e => {
     e.detail.image.classList.remove('_noflip');
   });
 
-  el.addEventListener('sortableUpdate', function (e) {
+  el.addEventListener('sortableUpdate', e => {
     e.detail.placeholder.classList.add('_noflip');
   });
 
   // dispatch "focusOther" .use-focus-other inputs if they are not active
   // ensures only one edit input is active
-  el.addEventListener('focusin', function (e) {
+  el.addEventListener('focusin', e => {
     if (!e.target.classList.contains('use-focus-other')) return;
 
-    document.querySelectorAll('.use-focus-other').forEach(function (el) {
+    document.querySelectorAll('.use-focus-other').forEach(el => {
       if (el === e.target) return;
       el.dispatchEvent(new CustomEvent('focusOther'));
     });
@@ -85,7 +85,7 @@ VT.TodoApp = function (el) {
   // listen to the TodoStore's data
   // this is the main update
   // everything else is related to drag & drop or FLIP animations
-  el.addEventListener('todoData', function (e) {
+  el.addEventListener('todoData', e => {
     update(e.detail);
   });
 
@@ -112,7 +112,7 @@ VT.TodoApp = function (el) {
       at: state.customAt,
     });
 
-    el.querySelectorAll('.app-collapsible').forEach(function (el) {
+    el.querySelectorAll('.app-collapsible').forEach(el => {
       el.appCollapsible.update();
     });
   }

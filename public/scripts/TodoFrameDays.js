@@ -1,9 +1,9 @@
 /* global VT */
 window.VT = window.VT || {};
 
-VT.TodoFrameDays = function (el) {
-  var RANGE = 14;
-  var state = {
+VT.TodoFrameDays = el => {
+  const RANGE = 14;
+  const state = {
     items: [],
     at: VT.formatDateId(new Date()),
   };
@@ -21,51 +21,51 @@ VT.TodoFrameDays = function (el) {
     '</nav>',
   ].join('\n');
 
-  setTimeout(function () {
+  setTimeout(() => {
     el.classList.add('-animated');
   }, 200);
 
   el.querySelectorAll('.app-icon').forEach(VT.AppIcon);
 
-  el.querySelector('.backward').addEventListener('click', function () {
+  el.querySelector('.backward').addEventListener('click', () => {
     el.dispatchEvent(new CustomEvent('seek', { detail: -1, bubbles: true }));
   });
 
-  el.querySelector('.forward').addEventListener('click', function () {
+  el.querySelector('.forward').addEventListener('click', () => {
     el.dispatchEvent(new CustomEvent('seek', { detail: 1, bubbles: true }));
   });
 
-  el.querySelector('.fastbackward').addEventListener('click', function () {
+  el.querySelector('.fastbackward').addEventListener('click', () => {
     el.dispatchEvent(new CustomEvent('seek', { detail: -5, bubbles: true }));
   });
 
-  el.querySelector('.fastforward').addEventListener('click', function () {
+  el.querySelector('.fastforward').addEventListener('click', () => {
     el.dispatchEvent(new CustomEvent('seek', { detail: 5, bubbles: true }));
   });
 
-  el.querySelector('.home').addEventListener('click', function () {
+  el.querySelector('.home').addEventListener('click', () => {
     el.dispatchEvent(new CustomEvent('seekHome', { bubbles: true }));
   });
 
   el.todoFrameDays = {
-    update: update,
+    update,
   };
 
   function update(next) {
     Object.assign(state, next);
 
-    var days = getDays();
+    const days = getDays();
 
-    var container = el.querySelector('.container');
-    var obsolete = new Set(container.children);
-    var childrenByKey = new Map();
+    const container = el.querySelector('.container');
+    const obsolete = new Set(container.children);
+    const childrenByKey = new Map();
 
-    obsolete.forEach(function (child) {
+    obsolete.forEach(child => {
       childrenByKey.set(child.getAttribute('data-key'), child);
     });
 
-    var children = days.map(function (day) {
-      var child = childrenByKey.get(day.id);
+    const children = days.map(day => {
+      let child = childrenByKey.get(day.id);
 
       if (child) {
         obsolete.delete(child);
@@ -77,16 +77,16 @@ VT.TodoFrameDays = function (el) {
       }
 
       child.todoDay.update(day);
-      child.style.transform = 'translateX(' + day.position * 100 + '%)';
+      child.style.transform = `translateX(${day.position * 100}%)`;
 
       return child;
     });
 
-    obsolete.forEach(function (child) {
+    obsolete.forEach(child => {
       container.removeChild(child);
     });
 
-    children.forEach(function (child, index) {
+    children.forEach((child, index) => {
       if (child !== container.children[index]) {
         container.insertBefore(child, container.children[index]);
       }
@@ -96,26 +96,26 @@ VT.TodoFrameDays = function (el) {
   }
 
   function updateHeight() {
-    var height = 280;
-    var container = el.querySelector('.container');
+    let height = 280;
+    const container = el.querySelector('.container');
 
-    for (var i = 0, l = container.children.length; i < l; ++i) {
+    for (let i = 0, l = container.children.length; i < l; ++i) {
       height = Math.max(container.children[i].offsetHeight, height);
     }
 
-    el.style.height = height + 50 + 'px';
+    el.style.height = `${height + 50}px`;
   }
 
   function getDays() {
-    var days = [];
+    const days = [];
 
-    for (var i = 0; i < 2 * RANGE; ++i) {
-      var t = new Date(state.at);
+    for (let i = 0; i < 2 * RANGE; ++i) {
+      const t = new Date(state.at);
       t.setDate(t.getDate() - RANGE + i);
-      var id = VT.formatDateId(t);
+      const id = VT.formatDateId(t);
 
       days.push({
-        id: id,
+        id,
         items: getItemsForDay(id),
         position: -RANGE + i,
       });
@@ -125,13 +125,9 @@ VT.TodoFrameDays = function (el) {
   }
 
   function getItemsForDay(dateId) {
-    var items = state.items.filter(function (item) {
-      return item.listId === dateId;
-    });
+    const items = state.items.filter(item => item.listId === dateId);
 
-    items.sort(function (a, b) {
-      return a.index - b.index;
-    });
+    items.sort((a, b) => a.index - b.index);
 
     return items;
   }

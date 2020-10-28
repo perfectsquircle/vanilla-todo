@@ -1,8 +1,8 @@
 /* global VT */
 window.VT = window.VT || {};
 
-VT.TodoFrameCustom = function (el) {
-  var state = {
+VT.TodoFrameCustom = el => {
+  const state = {
     lists: [],
     items: [],
     at: 0,
@@ -22,30 +22,30 @@ VT.TodoFrameCustom = function (el) {
 
   VT.AppSortable(el.querySelector('.container'), { direction: 'horizontal' });
 
-  setTimeout(function () {
+  setTimeout(() => {
     el.classList.add('-animated');
   }, 200);
 
   el.querySelectorAll('.app-icon').forEach(VT.AppIcon);
 
-  el.querySelector('.back').addEventListener('click', function () {
+  el.querySelector('.back').addEventListener('click', () => {
     el.dispatchEvent(
       new CustomEvent('customSeek', { detail: -1, bubbles: true })
     );
   });
 
-  el.querySelector('.forward').addEventListener('click', function () {
+  el.querySelector('.forward').addEventListener('click', () => {
     el.dispatchEvent(
       new CustomEvent('customSeek', { detail: 1, bubbles: true })
     );
   });
 
-  el.querySelector('.add').addEventListener('click', function () {
+  el.querySelector('.add').addEventListener('click', () => {
     el.dispatchEvent(new CustomEvent('addList', { detail: {}, bubbles: true }));
     // TODO seek if not at end
   });
 
-  el.addEventListener('sortableDrop', function (e) {
+  el.addEventListener('sortableDrop', e => {
     if (!e.detail.data.list) return;
 
     el.dispatchEvent(
@@ -59,30 +59,30 @@ VT.TodoFrameCustom = function (el) {
     );
   });
 
-  el.addEventListener('draggableOver', function (e) {
+  el.addEventListener('draggableOver', e => {
     if (!e.detail.data.list) return;
 
     updatePositions();
   });
 
   el.todoFrameCustom = {
-    update: update,
+    update,
   };
 
   function update(next) {
     Object.assign(state, next);
 
-    var lists = getLists();
-    var container = el.querySelector('.container');
-    var obsolete = new Set(container.children);
-    var childrenByKey = new Map();
+    const lists = getLists();
+    const container = el.querySelector('.container');
+    const obsolete = new Set(container.children);
+    const childrenByKey = new Map();
 
-    obsolete.forEach(function (child) {
+    obsolete.forEach(child => {
       childrenByKey.set(child.getAttribute('data-key'), child);
     });
 
-    var children = lists.map(function (list) {
-      var child = childrenByKey.get(list.id);
+    const children = lists.map(list => {
+      let child = childrenByKey.get(list.id);
 
       if (child) {
         obsolete.delete(child);
@@ -93,16 +93,16 @@ VT.TodoFrameCustom = function (el) {
         VT.TodoCustomList(child);
       }
 
-      child.todoCustomList.update({ list: list });
+      child.todoCustomList.update({ list });
 
       return child;
     });
 
-    obsolete.forEach(function (child) {
+    obsolete.forEach(child => {
       container.removeChild(child);
     });
 
-    children.forEach(function (child, index) {
+    children.forEach((child, index) => {
       if (child !== container.children[index]) {
         container.insertBefore(child, container.children[index]);
       }
@@ -113,53 +113,45 @@ VT.TodoFrameCustom = function (el) {
   }
 
   function updatePositions() {
-    el.querySelectorAll('.container > *').forEach(function (child, index) {
-      child.style.transform = 'translateX(' + (index - state.at) * 100 + '%)';
+    el.querySelectorAll('.container > *').forEach((child, index) => {
+      child.style.transform = `translateX(${(index - state.at) * 100}%)`;
     });
   }
 
   function updateHeight() {
-    var height = 280;
-    var container = el.querySelector('.container');
+    let height = 280;
+    const container = el.querySelector('.container');
 
-    var i, l;
+    let i, l;
 
     for (i = 0, l = container.children.length; i < l; ++i) {
       height = Math.max(container.children[i].offsetHeight, height);
     }
 
-    el.style.height = height + 50 + 'px';
+    el.style.height = `${height + 50}px`;
 
     for (i = 0, l = container.children.length; i < l; ++i) {
-      container.children[i].style.height = height + 'px';
+      container.children[i].style.height = `${height}px`;
     }
   }
 
   function getLists() {
-    var lists = state.lists.map(function (list) {
-      return {
-        id: list.id,
-        index: list.index,
-        title: list.title,
-        items: getItemsForList(list.id),
-      };
-    });
+    const lists = state.lists.map(list => ({
+      id: list.id,
+      index: list.index,
+      title: list.title,
+      items: getItemsForList(list.id)
+    }));
 
-    lists.sort(function (a, b) {
-      return a.index - b.index;
-    });
+    lists.sort((a, b) => a.index - b.index);
 
     return lists;
   }
 
   function getItemsForList(listId) {
-    var items = state.items.filter(function (item) {
-      return item.listId === listId;
-    });
+    const items = state.items.filter(item => item.listId === listId);
 
-    items.sort(function (a, b) {
-      return a.index - b.index;
-    });
+    items.sort((a, b) => a.index - b.index);
 
     return items;
   }

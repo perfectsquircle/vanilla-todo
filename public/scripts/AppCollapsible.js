@@ -1,17 +1,17 @@
 /* global VT */
 window.VT = window.VT || {};
 
-VT.AppCollapsible = function (el) {
-  var state = {
+VT.AppCollapsible = el => {
+  const state = {
     show: true,
   };
 
-  el.querySelector('.bar > .toggle').addEventListener('click', function () {
+  el.querySelector('.bar > .toggle').addEventListener('click', () => {
     update({ show: !state.show });
   });
 
   el.appCollapsible = {
-    update: update,
+    update,
   };
 
   function update(next) {
@@ -22,8 +22,8 @@ VT.AppCollapsible = function (el) {
       state.show
     );
 
-    el.querySelectorAll('.body').forEach(function (el) {
-      el.style.height = state.show ? el.children[0].offsetHeight + 'px' : '0';
+    el.querySelectorAll('.body').forEach(el => {
+      el.style.height = state.show ? `${el.children[0].offsetHeight}px` : '0';
     });
   }
 };

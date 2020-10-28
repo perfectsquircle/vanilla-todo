@@ -1,20 +1,18 @@
 /* global VT */
 window.VT = window.VT || {};
 
-VT.AppIcon = function (el) {
+VT.AppIcon = el => {
   if (el.children.length > 0) return;
 
-  var id = el.getAttribute('data-id');
-  var promise = VT.AppIcon.cache[id];
+  const id = el.getAttribute('data-id');
+  let promise = VT.AppIcon.cache[id];
 
   if (!promise) {
-    var url = VT.AppIcon.baseUrl + id + '.svg';
-    promise = VT.AppIcon.cache[id] = fetch(url).then(function (r) {
-      return r.text();
-    });
+    const url = `${VT.AppIcon.baseUrl + id}.svg`;
+    promise = VT.AppIcon.cache[id] = fetch(url).then(r => r.text());
   }
 
-  promise.then(function (svg) {
+  promise.then(svg => {
     el.innerHTML = el.classList.contains('-double') ? svg + svg : svg;
   });
 };

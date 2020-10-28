@@ -1,13 +1,13 @@
 /* global VT */
 window.VT = window.VT || {};
 
-VT.TodoCustomList = function (el) {
-  var state = {
+VT.TodoCustomList = el => {
+  const state = {
     list: null,
     editing: false,
   };
-  var startEditing = false;
-  var saveOnBlur = true;
+  let startEditing = false;
+  let saveOnBlur = true;
 
   el.innerHTML = [
     '<div class="header">',
@@ -20,9 +20,9 @@ VT.TodoCustomList = function (el) {
     '<div class="todo-list"></div>',
   ].join('\n');
 
-  var titleEl = el.querySelector('.title');
-  var inputEl = el.querySelector('.input');
-  var deleteEl = el.querySelector('.delete');
+  const titleEl = el.querySelector('.title');
+  const inputEl = el.querySelector('.input');
+  const deleteEl = el.querySelector('.delete');
 
   VT.AppDraggable(titleEl, {
     dropSelector: '.todo-frame.-custom .container',
@@ -30,29 +30,29 @@ VT.TodoCustomList = function (el) {
   VT.TodoList(el.querySelector('.todo-list'));
   el.querySelectorAll('.app-icon').forEach(VT.AppIcon);
 
-  titleEl.addEventListener('click', function () {
+  titleEl.addEventListener('click', () => {
     startEditing = true;
     update({ editing: true });
   });
 
-  deleteEl.addEventListener('touchstart', function () {
+  deleteEl.addEventListener('touchstart', () => {
     saveOnBlur = false;
   });
 
-  deleteEl.addEventListener('mousedown', function () {
+  deleteEl.addEventListener('mousedown', () => {
     saveOnBlur = false;
   });
 
-  inputEl.addEventListener('blur', function () {
+  inputEl.addEventListener('blur', () => {
     if (saveOnBlur) save();
     saveOnBlur = true;
   });
 
-  inputEl.addEventListener('focusOther', function () {
+  inputEl.addEventListener('focusOther', () => {
     if (state.editing) save();
   });
 
-  inputEl.addEventListener('keyup', function (e) {
+  inputEl.addEventListener('keyup', e => {
     switch (e.keyCode) {
       case 13: // enter
         save();
@@ -63,7 +63,7 @@ VT.TodoCustomList = function (el) {
     }
   });
 
-  deleteEl.addEventListener('click', function () {
+  deleteEl.addEventListener('click', () => {
     if (state.list.items.length > 0) {
       if (
         !confirm(
@@ -82,7 +82,7 @@ VT.TodoCustomList = function (el) {
     );
   });
 
-  el.addEventListener('draggableStart', function (e) {
+  el.addEventListener('draggableStart', e => {
     if (e.target !== titleEl) return;
 
     e.detail.data.list = state.list;
@@ -92,24 +92,24 @@ VT.TodoCustomList = function (el) {
     e.detail.setImage(el);
 
     // override for horizontal dragging only
-    e.detail.image.addEventListener('draggableDrag', function (e) {
-      var x = e.detail.clientX - e.detail.imageX;
-      var y = e.detail.originY - e.detail.imageY;
-      e.detail.image.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    e.detail.image.addEventListener('draggableDrag', e => {
+      const x = e.detail.clientX - e.detail.imageX;
+      const y = e.detail.originY - e.detail.imageY;
+      e.detail.image.style.transform = `translate(${x}px, ${y}px)`;
     });
   });
 
-  el.addEventListener('addItem', function (e) {
+  el.addEventListener('addItem', e => {
     e.detail.listId = state.list.id;
   });
 
-  el.addEventListener('moveItem', function (e) {
+  el.addEventListener('moveItem', e => {
     e.detail.listId = state.list.id;
     e.detail.index = e.detail.index || 0;
   });
 
   el.todoCustomList = {
-    update: update,
+    update,
   };
 
   function save() {
@@ -135,7 +135,7 @@ VT.TodoCustomList = function (el) {
     el.querySelector('.todo-list').todoList.update({ items: state.list.items });
     el.querySelector('.todo-list > .todo-item-input').setAttribute(
       'data-key',
-      'todo-item-input-' + state.list.id
+      `todo-item-input-${state.list.id}`
     );
 
     el.classList.toggle('-editing', state.editing);

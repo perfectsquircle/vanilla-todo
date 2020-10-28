@@ -1,8 +1,8 @@
 /* global VT */
 window.VT = window.VT || {};
 
-VT.TodoDay = function (el) {
-  var state = {
+VT.TodoDay = el => {
+  const state = {
     dateId: el.getAttribute('data-key'),
     items: [],
   };
@@ -17,26 +17,26 @@ VT.TodoDay = function (el) {
 
   VT.TodoList(el.querySelector('.todo-list'));
 
-  el.addEventListener('addItem', function (e) {
+  el.addEventListener('addItem', e => {
     e.detail.listId = state.dateId;
   });
 
-  el.addEventListener('moveItem', function (e) {
+  el.addEventListener('moveItem', e => {
     e.detail.listId = state.dateId;
     e.detail.index = e.detail.index || 0;
   });
 
   el.todoDay = {
-    update: update,
+    update,
   };
 
   function update(next) {
     Object.assign(state, next);
 
-    var date = new Date(state.dateId);
-    var today = new Date();
+    const date = new Date(state.dateId);
+    const today = new Date();
     today.setHours(0, 0, 0, 0);
-    var tomorrow = new Date(today);
+    const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     el.classList.toggle('-past', date < today);
