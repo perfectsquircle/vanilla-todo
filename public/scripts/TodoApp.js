@@ -1,11 +1,17 @@
-/* global VT */
-window.VT = window.VT || {};
+import { formatDateId } from './util.js';
+import { AppFlip } from './AppFlip.js';
+import { TodoStore } from './TodoStore.js';
+import { AppCollapsible } from './AppCollapsible.js';
+import { AppIcon } from './AppIcon.js';
+import { AppFps } from './AppFps.js';
+import { TodoFrameDays } from './TodoFrameDays.js';
+import { TodoFrameCustom } from './TodoFrameCustom.js';
 
-VT.TodoApp = el => {
+export const TodoApp = el => {
   const state = {
     items: [],
     customLists: [],
-    at: VT.formatDateId(new Date()),
+    at: formatDateId(new Date()),
     customAt: 0,
   };
 
@@ -32,18 +38,18 @@ VT.TodoApp = el => {
     '</footer>',
   ].join('\n');
 
-  VT.AppFlip(el, {
+  AppFlip(el, {
     selector: '.todo-item, .todo-item-input, .todo-day, .todo-custom-list',
     removeTimeout: 200,
   });
-  VT.TodoStore(el);
+  TodoStore(el);
 
-  el.querySelectorAll('.app-collapsible').forEach(VT.AppCollapsible);
-  el.querySelectorAll('.app-icon').forEach(VT.AppIcon);
-  el.querySelectorAll('.app-fps').forEach(VT.AppFps);
+  el.querySelectorAll('.app-collapsible').forEach(AppCollapsible);
+  el.querySelectorAll('.app-icon').forEach(AppIcon);
+  el.querySelectorAll('.app-fps').forEach(AppFps);
 
-  VT.TodoFrameDays(el.querySelector('.todo-frame.-days'));
-  VT.TodoFrameCustom(el.querySelector('.todo-frame.-custom'));
+  TodoFrameDays(el.querySelector('.todo-frame.-days'));
+  TodoFrameCustom(el.querySelector('.todo-frame.-custom'));
 
   // each of these events make changes to the HTML to be animated using FLIP
   // listening to them using "capture" dispatches "beforeFlip" before any changes

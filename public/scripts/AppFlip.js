@@ -1,7 +1,4 @@
-/* global VT */
-window.VT = window.VT || {};
-
-VT.AppFlip = (el, options) => {
+export const AppFlip = (el, options) => {
   let enabled = options.initialDelay === 0;
   let first;
   let level = 0;
@@ -132,8 +129,7 @@ VT.AppFlip = (el, options) => {
       } else if (entry.deltaX !== 0 || entry.deltaY !== 0) {
         // set inverted transform with "scale(1)" marker, see above
         entry.el.style.transition = 'none';
-        entry.el.style.transform =
-          `translate(${entry.deltaX}px, ${entry.deltaY}px) scale(1) ${entry.transform}`;
+        entry.el.style.transform = `translate(${entry.deltaX}px, ${entry.deltaY}px) scale(1) ${entry.transform}`;
         toAnimate.push(entry);
       }
     });

@@ -1,11 +1,12 @@
-/* global VT */
-window.VT = window.VT || {};
+import { formatDateId } from './util.js';
+import { AppIcon } from './AppIcon.js';
+import { TodoDay } from './TodoDay.js';
 
-VT.TodoFrameDays = el => {
+export const TodoFrameDays = el => {
   const RANGE = 14;
   const state = {
     items: [],
-    at: VT.formatDateId(new Date()),
+    at: formatDateId(new Date()),
   };
 
   el.innerHTML = [
@@ -25,7 +26,7 @@ VT.TodoFrameDays = el => {
     el.classList.add('-animated');
   }, 200);
 
-  el.querySelectorAll('.app-icon').forEach(VT.AppIcon);
+  el.querySelectorAll('.app-icon').forEach(AppIcon);
 
   el.querySelector('.backward').addEventListener('click', () => {
     el.dispatchEvent(new CustomEvent('seek', { detail: -1, bubbles: true }));
@@ -73,7 +74,7 @@ VT.TodoFrameDays = el => {
         child = document.createElement('div');
         child.className = 'card todo-day';
         child.setAttribute('data-key', day.id);
-        VT.TodoDay(child);
+        TodoDay(child);
       }
 
       child.todoDay.update(day);
@@ -112,7 +113,7 @@ VT.TodoFrameDays = el => {
     for (let i = 0; i < 2 * RANGE; ++i) {
       const t = new Date(state.at);
       t.setDate(t.getDate() - RANGE + i);
-      const id = VT.formatDateId(t);
+      const id = formatDateId(t);
 
       days.push({
         id,

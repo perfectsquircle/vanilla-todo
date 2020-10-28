@@ -1,7 +1,8 @@
-/* global VT */
-window.VT = window.VT || {};
+import { AppSortable } from './AppSortable.js';
+import { TodoItemInput } from './TodoItemInput.js';
+import { TodoItem } from './TodoItem.js';
 
-VT.TodoList = el => {
+export const TodoList = el => {
   const state = {
     items: [],
   };
@@ -11,8 +12,8 @@ VT.TodoList = el => {
     '<div class="todo-item-input"></div>',
   ].join('\n');
 
-  VT.AppSortable(el.querySelector('.items'), {});
-  VT.TodoItemInput(el.querySelector('.todo-item-input'));
+  AppSortable(el.querySelector('.items'), {});
+  TodoItemInput(el.querySelector('.todo-item-input'));
 
   el.addEventListener('sortableDrop', e => {
     el.dispatchEvent(
@@ -46,7 +47,7 @@ VT.TodoList = el => {
         child = document.createElement('div');
         child.classList.add('todo-item');
         child.setAttribute('data-key', item.id);
-        VT.TodoItem(child);
+        TodoItem(child);
       }
 
       child.todoItem.update({ item });

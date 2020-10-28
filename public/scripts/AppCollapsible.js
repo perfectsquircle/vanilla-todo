@@ -1,7 +1,4 @@
-/* global VT */
-window.VT = window.VT || {};
-
-VT.AppCollapsible = el => {
+export const AppCollapsible = el => {
   const state = {
     show: true,
   };

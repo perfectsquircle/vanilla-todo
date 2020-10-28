@@ -1,7 +1,4 @@
-/* global VT */
-window.VT = window.VT || {};
-
-VT.AppSortable = (el, options) => {
+export const AppSortable = (el, options) => {
   let placeholder;
   let placeholderSource;
   const horizontal = options.direction === 'horizontal';

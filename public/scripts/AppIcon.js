@@ -1,15 +1,12 @@
-/* global VT */
-window.VT = window.VT || {};
-
-VT.AppIcon = el => {
+export const AppIcon = el => {
   if (el.children.length > 0) return;
 
   const id = el.getAttribute('data-id');
-  let promise = VT.AppIcon.cache[id];
+  let promise = AppIcon.cache[id];
 
   if (!promise) {
-    const url = `${VT.AppIcon.baseUrl + id}.svg`;
-    promise = VT.AppIcon.cache[id] = fetch(url).then(r => r.text());
+    const url = `${AppIcon.baseUrl + id}.svg`;
+    promise = AppIcon.cache[id] = fetch(url).then(r => r.text());
   }
 
   promise.then(svg => {
@@ -17,6 +14,6 @@ VT.AppIcon = el => {
   });
 };
 
-VT.AppIcon.baseUrl =
+AppIcon.baseUrl =
   'https://rawcdn.githack.com/primer/octicons/ff7f6eee63fa2f2d24d02e3aa76a87db48e4b6f6/icons/';
-VT.AppIcon.cache = {};
+AppIcon.cache = {};

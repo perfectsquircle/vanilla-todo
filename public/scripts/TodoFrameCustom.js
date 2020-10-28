@@ -1,7 +1,8 @@
-/* global VT */
-window.VT = window.VT || {};
+import { AppSortable } from './AppSortable.js';
+import { AppIcon } from './AppIcon.js';
+import { TodoCustomList } from './TodoCustomList.js';
 
-VT.TodoFrameCustom = el => {
+export const TodoFrameCustom = el => {
   const state = {
     lists: [],
     items: [],
@@ -20,13 +21,13 @@ VT.TodoFrameCustom = el => {
     '</div>',
   ].join('\n');
 
-  VT.AppSortable(el.querySelector('.container'), { direction: 'horizontal' });
+  AppSortable(el.querySelector('.container'), { direction: 'horizontal' });
 
   setTimeout(() => {
     el.classList.add('-animated');
   }, 200);
 
-  el.querySelectorAll('.app-icon').forEach(VT.AppIcon);
+  el.querySelectorAll('.app-icon').forEach(AppIcon);
 
   el.querySelector('.back').addEventListener('click', () => {
     el.dispatchEvent(
@@ -90,7 +91,7 @@ VT.TodoFrameCustom = el => {
         child = document.createElement('div');
         child.className = 'card todo-custom-list';
         child.setAttribute('data-key', list.id);
-        VT.TodoCustomList(child);
+        TodoCustomList(child);
       }
 
       child.todoCustomList.update({ list });
@@ -140,7 +141,7 @@ VT.TodoFrameCustom = el => {
       id: list.id,
       index: list.index,
       title: list.title,
-      items: getItemsForList(list.id)
+      items: getItemsForList(list.id),
     }));
 
     lists.sort((a, b) => a.index - b.index);

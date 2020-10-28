@@ -1,22 +1,26 @@
-/* global VT */
-window.VT = window.VT || {};
+export const uuid = () =>
+  'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = (Math.random() * 16) | 0,
+      v = c == 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 
-VT.uuid = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-  const r = (Math.random() * 16) | 0, v = c == 'x' ? r : (r & 0x3) | 0x8;
-  return v.toString(16);
-});
-
-VT.formatDateId = date => {
+export const formatDateId = date => {
   const y = date.getFullYear();
   const m = date.getMonth() + 1;
   const d = date.getDate();
 
-  return `${y.toString().padStart(4, '0')}-${m.toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`;
+  return `${y.toString().padStart(4, '0')}-${m
+    .toString()
+    .padStart(2, '0')}-${d.toString().padStart(2, '0')}`;
 };
 
-VT.formatDate = date => `${VT.formatMonth(date)} ${VT.formatDayOfMonth(date)} ${date.getFullYear().toString().padStart(4, '0')}`;
+export const formatDate = date =>
+  `${formatMonth(date)} ${formatDayOfMonth(
+    date
+  )} ${date.getFullYear().toString().padStart(4, '0')}`;
 
-VT.formatDayOfMonth = date => {
+export const formatDayOfMonth = date => {
   const d = date.getDate();
   const t = d % 10;
 
@@ -31,7 +35,7 @@ VT.formatDayOfMonth = date => {
     : `${d}th`;
 };
 
-VT.DAY_NAMES = [
+export const DAY_NAMES = [
   'Sunday',
   'Monday',
   'Tuesday',
@@ -41,9 +45,9 @@ VT.DAY_NAMES = [
   'Saturday',
 ];
 
-VT.formatDayOfWeek = date => VT.DAY_NAMES[date.getDay()];
+export const formatDayOfWeek = date => DAY_NAMES[date.getDay()];
 
-VT.MONTH_NAMES = [
+export const MONTH_NAMES = [
   'January',
   'February',
   'March',
@@ -58,4 +62,4 @@ VT.MONTH_NAMES = [
   'December',
 ];
 
-VT.formatMonth = date => VT.MONTH_NAMES[date.getMonth()];
+export const formatMonth = date => MONTH_NAMES[date.getMonth()];

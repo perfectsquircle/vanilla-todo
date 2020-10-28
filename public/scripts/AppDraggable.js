@@ -1,7 +1,4 @@
-/* global VT */
-window.VT = window.VT || {};
-
-VT.AppDraggable = (el, options) => {
+export const AppDraggable = (el, options) => {
   const dragThreshold = options.dragThreshold || 5;
   const dropRange = options.dropRange || 50;
   const dropRangeSquared = dropRange * dropRange;
@@ -301,7 +298,11 @@ VT.AppDraggable = (el, options) => {
 
     document.querySelectorAll(options.dropSelector).forEach(el => {
       const rect = el.getBoundingClientRect();
-      const distanceSquared = pointDistanceToRectSquared(clientX, clientY, rect);
+      const distanceSquared = pointDistanceToRectSquared(
+        clientX,
+        clientY,
+        rect
+      );
 
       if (distanceSquared > dropRangeSquared) return;
 

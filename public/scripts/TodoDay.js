@@ -1,7 +1,7 @@
-/* global VT */
-window.VT = window.VT || {};
+import { TodoList } from './TodoList.js';
+import {formatDayOfWeek, formatDate } from './util.js';
 
-VT.TodoDay = el => {
+export const TodoDay = el => {
   const state = {
     dateId: el.getAttribute('data-key'),
     items: [],
@@ -15,7 +15,7 @@ VT.TodoDay = el => {
     '<div class="todo-list"></div>',
   ].join('\n');
 
-  VT.TodoList(el.querySelector('.todo-list'));
+  TodoList(el.querySelector('.todo-list'));
 
   el.addEventListener('addItem', e => {
     e.detail.listId = state.dateId;
@@ -42,10 +42,10 @@ VT.TodoDay = el => {
     el.classList.toggle('-past', date < today);
     el.classList.toggle('-today', date >= today && date < tomorrow);
 
-    el.querySelector('.header > .dayofweek').innerText = VT.formatDayOfWeek(
+    el.querySelector('.header > .dayofweek').innerText = formatDayOfWeek(
       date
     );
-    el.querySelector('.header > .date').innerText = VT.formatDate(date);
+    el.querySelector('.header > .date').innerText = formatDate(date);
     el.querySelector('.todo-list').todoList.update({ items: state.items });
   }
 };

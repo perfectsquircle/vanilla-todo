@@ -1,11 +1,10 @@
-/* global VT */
-window.VT = window.VT || {};
+import { formatDateId, uuid } from './util.js';
 
-VT.TodoStore = el => {
+export const TodoStore = el => {
   const state = {
     items: [],
     customLists: [],
-    at: VT.formatDateId(new Date()),
+    at: formatDateId(new Date()),
     customAt: 0,
   };
   let storeTimeout;
@@ -20,7 +19,7 @@ VT.TodoStore = el => {
     });
 
     state.items.push({
-      id: VT.uuid(),
+      id: uuid(),
       listId: e.detail.listId,
       index,
       label: e.detail.label,
@@ -47,7 +46,9 @@ VT.TodoStore = el => {
   el.addEventListener('moveItem', e => {
     const movedItem = state.items.find(item => item.id === e.detail.item.id);
 
-    const listItems = state.items.filter(item => item.listId === e.detail.listId && item !== movedItem);
+    const listItems = state.items.filter(
+      item => item.listId === e.detail.listId && item !== movedItem
+    );
 
     listItems.sort((a, b) => a.index - b.index);
 
@@ -75,7 +76,7 @@ VT.TodoStore = el => {
     });
 
     state.customLists.push({
-      id: VT.uuid(),
+      id: uuid(),
       index,
       title: e.detail.title || '',
     });
@@ -94,7 +95,9 @@ VT.TodoStore = el => {
   });
 
   el.addEventListener('moveList', e => {
-    const movedListIndex = state.customLists.findIndex(list => list.id === e.detail.list.id);
+    const movedListIndex = state.customLists.findIndex(
+      list => list.id === e.detail.list.id
+    );
     const movedList = state.customLists[movedListIndex];
 
     state.customLists.splice(movedListIndex, 1);
@@ -110,7 +113,9 @@ VT.TodoStore = el => {
 
   el.addEventListener('deleteList', e => {
     dispatch({
-      customLists: state.customLists.filter(customList => customList.id !== e.detail.id),
+      customLists: state.customLists.filter(
+        customList => customList.id !== e.detail.id
+      ),
     });
   });
 
@@ -119,13 +124,13 @@ VT.TodoStore = el => {
     t.setDate(t.getDate() + e.detail);
 
     dispatch({
-      at: VT.formatDateId(t),
+      at: formatDateId(t),
     });
   });
 
   el.addEventListener('seekHome', () => {
     dispatch({
-      at: VT.formatDateId(new Date()),
+      at: formatDateId(new Date()),
     });
   });
 

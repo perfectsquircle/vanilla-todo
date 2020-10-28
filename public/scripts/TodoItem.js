@@ -1,7 +1,7 @@
-/* global VT */
-window.VT = window.VT || {};
+import { AppDraggable } from './AppDraggable.js';
+import { AppIcon } from './AppIcon.js';
 
-VT.TodoItem = el => {
+export const TodoItem = el => {
   const state = {
     item: null,
     editing: false,
@@ -25,11 +25,11 @@ VT.TodoItem = el => {
   const inputEl = el.querySelector('.input');
   const saveEl = el.querySelector('.save');
 
-  VT.AppDraggable(el, {
+  AppDraggable(el, {
     dropSelector: '.todo-list > .items',
   });
 
-  el.querySelectorAll('.app-icon').forEach(VT.AppIcon);
+  el.querySelectorAll('.app-icon').forEach(AppIcon);
 
   checkboxEl.addEventListener('touchstart', () => {
     saveOnBlur = false;

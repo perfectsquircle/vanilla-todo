@@ -1,7 +1,9 @@
-/* global VT */
-window.VT = window.VT || {};
+import { AppDraggable } from './AppDraggable.js';
+import { TodoList } from './TodoList.js';
+import { AppIcon } from './AppIcon.js';
 
-VT.TodoCustomList = el => {
+
+export const TodoCustomList = el => {
   const state = {
     list: null,
     editing: false,
@@ -24,11 +26,11 @@ VT.TodoCustomList = el => {
   const inputEl = el.querySelector('.input');
   const deleteEl = el.querySelector('.delete');
 
-  VT.AppDraggable(titleEl, {
+  AppDraggable(titleEl, {
     dropSelector: '.todo-frame.-custom .container',
   });
-  VT.TodoList(el.querySelector('.todo-list'));
-  el.querySelectorAll('.app-icon').forEach(VT.AppIcon);
+  TodoList(el.querySelector('.todo-list'));
+  el.querySelectorAll('.app-icon').forEach(AppIcon);
 
   titleEl.addEventListener('click', () => {
     startEditing = true;

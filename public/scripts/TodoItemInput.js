@@ -1,7 +1,6 @@
-/* global VT */
-window.VT = window.VT || {};
+import { AppIcon } from './AppIcon.js';
 
-VT.TodoItemInput = el => {
+export const TodoItemInput = el => {
   let saveOnBlur = true;
 
   el.innerHTML = [
@@ -12,7 +11,7 @@ VT.TodoItemInput = el => {
   const inputEl = el.querySelector('.input');
   const saveEl = el.querySelector('.save');
 
-  el.querySelectorAll('.app-icon').forEach(VT.AppIcon);
+  el.querySelectorAll('.app-icon').forEach(AppIcon);
 
   inputEl.addEventListener('keyup', e => {
     switch (e.keyCode) {

@@ -1,7 +1,4 @@
-/* global VT */
-window.VT = window.VT || {};
-
-VT.AppFps = el => {
+export const AppFps = el => {
   const sampleSize = 20;
   let times = [];
 
@@ -27,8 +24,9 @@ VT.AppFps = el => {
 
     const fps = (sampleSize / sum) * 1000;
 
-    el.innerText =
-      `${fps.toFixed(0)} fps (${min.toFixed(0)} ms - ${max.toFixed(0)} ms)`;
+    el.innerText = `${fps.toFixed(0)} fps (${min.toFixed(0)} ms - ${max.toFixed(
+      0
+    )} ms)`;
 
     times = [];
   }
