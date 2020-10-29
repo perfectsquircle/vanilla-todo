@@ -7,10 +7,10 @@ export const TodoList = el => {
     items: [],
   };
 
-  el.innerHTML = [
-    '<div class="items"></div>',
-    '<div class="todo-item-input"></div>',
-  ].join('\n');
+  el.innerHTML = `
+    <div class="items"></div>
+    <div class="todo-item-input"></div>
+  `;
 
   AppSortable(el.querySelector('.items'), {});
   TodoItemInput(el.querySelector('.todo-item-input'));

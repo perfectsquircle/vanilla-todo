@@ -10,16 +10,16 @@ export const TodoFrameCustom = el => {
     show: true,
   };
 
-  el.innerHTML = [
-    '<div class="leftcontrols">',
-    '  <p><button class="app-button -circle -xl back"><i class="app-icon" data-id="chevron-left-24"></i></button></p>',
-    '</div>',
-    '<div class="container"></div>',
-    '<div class="rightcontrols">',
-    '  <p><button class="app-button -circle -xl forward"><i class="app-icon" data-id="chevron-right-24"></i></button></p>',
-    '  <p><button class="app-button -circle -xl add"><i class="app-icon" data-id="plus-circle-24"></i></button></p>',
-    '</div>',
-  ].join('\n');
+  el.innerHTML = `
+    <div class="leftcontrols">
+      <p><button class="app-button -circle -xl back"><i class="app-icon" data-id="chevron-left-24"></i></button></p>
+    </div>
+    <div class="container"></div>
+    <div class="rightcontrols">
+      <p><button class="app-button -circle -xl forward"><i class="app-icon" data-id="chevron-right-24"></i></button></p>
+      <p><button class="app-button -circle -xl add"><i class="app-icon" data-id="plus-circle-24"></i></button></p>
+    </div>
+  `;
 
   AppSortable(el.querySelector('.container'), { direction: 'horizontal' });
 

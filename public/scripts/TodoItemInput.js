@@ -3,10 +3,10 @@ import { AppIcon } from './AppIcon.js';
 export const TodoItemInput = el => {
   let saveOnBlur = true;
 
-  el.innerHTML = [
-    '<input type="text" class="input use-focus-other">',
-    '<button class="app-button save"><i class="app-icon" data-id="plus-24"></i></button>',
-  ].join('\n');
+  el.innerHTML = `
+    <input type="text" class="input use-focus-other">
+    <button class="app-button save"><i class="app-icon" data-id="plus-24"></i></button>
+  `;
 
   const inputEl = el.querySelector('.input');
   const saveEl = el.querySelector('.save');
@@ -31,9 +31,7 @@ export const TodoItemInput = el => {
 
   inputEl.addEventListener('focusOther', save);
 
-  saveEl.addEventListener('mousedown', () => {
-    saveOnBlur = false;
-  });
+  saveEl.addEventListener('mousedown', () => (saveOnBlur = false));
 
   saveEl.addEventListener('click', () => {
     save();

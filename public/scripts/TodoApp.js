@@ -15,28 +15,28 @@ export const TodoApp = el => {
     customAt: 0,
   };
 
-  el.innerHTML = [
-    '<header class="app-header">',
-    '  <h1 class="title">VANILLA TODO</h1>',
-    '  <p class="app-fps"></p>',
-    '</header>',
-    '<div class="todo-frame -days"></div>',
-    '<div class="app-collapsible">',
-    '  <p class="bar">',
-    '    <button class="app-button -circle toggle"><i class="app-icon" data-id="chevron-up-24"></i></button>',
-    '  </p>',
-    '  <div class="body">',
-    '    <div class="todo-frame -custom"></div>',
-    '  </div>',
-    '</div>',
-    '<footer class="app-footer">',
-    '  <p>',
-    '    VANILLA TODO &copy 2020 <a href="https://morrisbrodersen.de">Morris Brodersen</a>',
-    '    &mdash; A case study on viable techniques for vanilla web development.',
-    '    <a href="https://github.com/morris/vanilla-todo">About →</a>',
-    '  </p>',
-    '</footer>',
-  ].join('\n');
+  el.innerHTML = `
+    <header class="app-header">
+      <h1 class="title">VANILLA TODO</h1>
+      <p class="app-fps"></p>
+    </header>
+    <div class="todo-frame -days"></div>
+    <div class="app-collapsible">
+      <p class="bar">
+        <button class="app-button -circle toggle"><i class="app-icon" data-id="chevron-up-24"></i></button>
+      </p>
+      <div class="body">
+        <div class="todo-frame -custom"></div>
+      </div>
+    </div>
+    <footer class="app-footer">
+      <p>
+        VANILLA TODO &copy 2020 <a href="https://morrisbrodersen.de">Morris Brodersen</a>
+        &mdash; A case study on viable techniques for vanilla web development.
+        <a href="https://github.com/morris/vanilla-todo">About →</a>
+      </p>
+    </footer>
+  `;
 
   AppFlip(el, {
     selector: '.todo-item, .todo-item-input, .todo-day, .todo-custom-list',

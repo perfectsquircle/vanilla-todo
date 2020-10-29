@@ -1,5 +1,5 @@
 import { TodoList } from './TodoList.js';
-import {formatDayOfWeek, formatDate } from './util.js';
+import { formatDayOfWeek, formatDate } from './util.js';
 
 export const TodoDay = el => {
   const state = {
@@ -7,13 +7,13 @@ export const TodoDay = el => {
     items: [],
   };
 
-  el.innerHTML = [
-    '<div class="header">',
-    '  <h3 class="dayofweek"></h3>',
-    '  <h6 class="date"></h6>',
-    '</div>',
-    '<div class="todo-list"></div>',
-  ].join('\n');
+  el.innerHTML = `
+    <div class="header">
+      <h3 class="dayofweek"></h3>
+      <h6 class="date"></h6>
+    </div>
+    <div class="todo-list"></div>
+  `;
 
   TodoList(el.querySelector('.todo-list'));
 
@@ -42,9 +42,7 @@ export const TodoDay = el => {
     el.classList.toggle('-past', date < today);
     el.classList.toggle('-today', date >= today && date < tomorrow);
 
-    el.querySelector('.header > .dayofweek').innerText = formatDayOfWeek(
-      date
-    );
+    el.querySelector('.header > .dayofweek').innerText = formatDayOfWeek(date);
     el.querySelector('.header > .date').innerText = formatDate(date);
     el.querySelector('.todo-list').todoList.update({ items: state.items });
   }

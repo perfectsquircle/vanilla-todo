@@ -9,18 +9,18 @@ export const TodoFrameDays = el => {
     at: formatDateId(new Date()),
   };
 
-  el.innerHTML = [
-    '<nav class="leftcontrols">',
-    '  <p><button class="app-button -circle -xl backward"><i class="app-icon" data-id="chevron-left-24"></i></button></p>',
-    '  <p><button class="app-button fastbackward"><i class="app-icon -double" data-id="chevron-left-16"></i></i></button></p>',
-    '  <p><button class="app-button home"><i class="app-icon" data-id="home-16"></i></button></p>',
-    '</nav>',
-    '<div class="container"></div>',
-    '<nav class="rightcontrols">',
-    '  <p><button class="app-button -circle -xl forward"><i class="app-icon" data-id="chevron-right-24"></i></button></p>',
-    '  <p><button class="app-button fastforward"><i class="app-icon -double" data-id="chevron-right-16"></i></button></p>',
-    '</nav>',
-  ].join('\n');
+  el.innerHTML = `
+    <nav class="leftcontrols">
+      <p><button class="app-button -circle -xl backward"><i class="app-icon" data-id="chevron-left-24"></i></button></p>
+      <p><button class="app-button fastbackward"><i class="app-icon -double" data-id="chevron-left-16"></i></i></button></p>
+      <p><button class="app-button home"><i class="app-icon" data-id="home-16"></i></button></p>
+    </nav>
+    <div class="container"></div>
+    <nav class="rightcontrols">
+      <p><button class="app-button -circle -xl forward"><i class="app-icon" data-id="chevron-right-24"></i></button></p>
+      <p><button class="app-button fastforward"><i class="app-icon -double" data-id="chevron-right-16"></i></button></p>
+    </nav>
+  `;
 
   setTimeout(() => {
     el.classList.add('-animated');

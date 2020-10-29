@@ -9,16 +9,16 @@ export const TodoItem = el => {
   let startEditing = false;
   let saveOnBlur = true;
 
-  el.innerHTML = [
-    '<div class="checkbox">',
-    '  <input type="checkbox">',
-    '</div>',
-    '<p class="label"></p>',
-    '<p class="form">',
-    '  <input type="text" class="input use-focus-other">',
-    '  <button class="app-button save"><i class="app-icon" data-id="check-16"></i></button>',
-    '</p>',
-  ].join('\n');
+  el.innerHTML = `
+    <div class="checkbox">
+      <input type="checkbox">
+    </div>
+    <p class="label"></p>
+    <p class="form">
+      <input type="text" class="input use-focus-other">
+      <button class="app-button save"><i class="app-icon" data-id="check-16"></i></button>
+    </p>
+  `;
 
   const checkboxEl = el.querySelector('.checkbox');
   const labelEl = el.querySelector('.label');
@@ -31,13 +31,9 @@ export const TodoItem = el => {
 
   el.querySelectorAll('.app-icon').forEach(AppIcon);
 
-  checkboxEl.addEventListener('touchstart', () => {
-    saveOnBlur = false;
-  });
+  checkboxEl.addEventListener('touchstart', () => (saveOnBlur = false));
 
-  checkboxEl.addEventListener('mousedown', () => {
-    saveOnBlur = false;
-  });
+  checkboxEl.addEventListener('mousedown', () => (saveOnBlur = false));
 
   checkboxEl.addEventListener('click', () => {
     if (state.editing) save();
@@ -78,9 +74,7 @@ export const TodoItem = el => {
     if (state.editing) save();
   });
 
-  saveEl.addEventListener('mousedown', () => {
-    saveOnBlur = false;
-  });
+  saveEl.addEventListener('mousedown', () => (saveOnBlur = false));
 
   saveEl.addEventListener('click', save);
 

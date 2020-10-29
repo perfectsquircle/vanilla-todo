@@ -2,7 +2,6 @@ import { AppDraggable } from './AppDraggable.js';
 import { TodoList } from './TodoList.js';
 import { AppIcon } from './AppIcon.js';
 
-
 export const TodoCustomList = el => {
   const state = {
     list: null,
@@ -11,16 +10,16 @@ export const TodoCustomList = el => {
   let startEditing = false;
   let saveOnBlur = true;
 
-  el.innerHTML = [
-    '<div class="header">',
-    '  <h3 class="title"></h3>',
-    '  <p class="form">',
-    '    <input type="text" class="input use-focus-other">',
-    '    <button class="app-button delete"><i class="app-icon" data-id="trashcan-16"></i></button>',
-    '  </p>',
-    '</div>',
-    '<div class="todo-list"></div>',
-  ].join('\n');
+  el.innerHTML = `
+    <div class="header">
+      <h3 class="title"></h3>
+      <p class="form">
+        <input type="text" class="input use-focus-other">
+        <button class="app-button delete"><i class="app-icon" data-id="trashcan-16"></i></button>
+      </p>
+    </div>
+    <div class="todo-list"></div>
+  `;
 
   const titleEl = el.querySelector('.title');
   const inputEl = el.querySelector('.input');
