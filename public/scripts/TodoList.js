@@ -1,20 +1,21 @@
-/* global VT */
-window.VT = window.VT || {};
+import { AppSortable } from './AppSortable.js';
+import { TodoItemInput } from './TodoItemInput.js';
+import { TodoItem } from './TodoItem.js';
 
-VT.TodoList = function (el) {
-  var state = {
+export const TodoList = el => {
+  const state = {
     items: [],
   };
 
-  el.innerHTML = [
-    '<div class="items"></div>',
-    '<div class="todo-item-input"></div>',
-  ].join('\n');
+  el.innerHTML = `
+    <div class="items"></div>
+    <div class="todo-item-input"></div>
+  `;
 
-  VT.AppSortable(el.querySelector('.items'), {});
-  VT.TodoItemInput(el.querySelector('.todo-item-input'));
+  AppSortable(el.querySelector('.items'), {});
+  TodoItemInput(el.querySelector('.todo-item-input'));
 
-  el.addEventListener('sortableDrop', function (e) {
+  el.addEventListener('sortableDrop', e => {
     el.dispatchEvent(
       new CustomEvent('moveItem', {
         detail: {
@@ -29,16 +30,16 @@ VT.TodoList = function (el) {
   function update(next) {
     Object.assign(state, next);
 
-    var container = el.querySelector('.items');
-    var obsolete = new Set(container.children);
-    var childrenByKey = new Map();
+    const container = el.querySelector('.items');
+    const obsolete = new Set(container.children);
+    const childrenByKey = new Map();
 
-    obsolete.forEach(function (child) {
+    obsolete.forEach(child => {
       childrenByKey.set(child.getAttribute('data-key'), child);
     });
 
-    var children = state.items.map(function (item) {
-      var child = childrenByKey.get(item.id);
+    const children = state.items.map(item => {
+      let child = childrenByKey.get(item.id);
 
       if (child) {
         obsolete.delete(child);
@@ -46,19 +47,19 @@ VT.TodoList = function (el) {
         child = document.createElement('div');
         child.classList.add('todo-item');
         child.setAttribute('data-key', item.id);
-        VT.TodoItem(child);
+        TodoItem(child);
       }
 
-      child.todoItem.update({ item: item });
+      child.todoItem.update({ item });
 
       return child;
     });
 
-    obsolete.forEach(function (child) {
+    obsolete.forEach(child => {
       container.removeChild(child);
     });
 
-    children.forEach(function (child, index) {
+    children.forEach((child, index) => {
       if (child !== container.children[index]) {
         container.insertBefore(child, container.children[index]);
       }
@@ -66,6 +67,6 @@ VT.TodoList = function (el) {
   }
 
   el.todoList = {
-    update: update,
+    update,
   };
 };
